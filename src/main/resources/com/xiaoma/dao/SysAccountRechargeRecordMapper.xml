@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoma.dao.SysAccountRechargeRecordMapper">
+  <resultMap id="BaseResultMap" type="com.xiaoma.bean.po.SysAccountRechargeRecord">
+    <id column="recharge_id" jdbcType="BIGINT" property="rechargeId" />
+    <result column="advertiser_id" jdbcType="VARCHAR" property="advertiserId" />
+    <result column="advertiser_phone" jdbcType="VARCHAR" property="advertiserPhone" />
+    <result column="recharge_before" jdbcType="DECIMAL" property="rechargeBefore" />
+    <result column="recharge_back" jdbcType="DECIMAL" property="rechargeBack" />
+    <result column="recharge_num" jdbcType="DECIMAL" property="rechargeNum" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="transaction_serial_number" jdbcType="VARCHAR" property="transactionSerialNumber" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_ymd" jdbcType="VARCHAR" property="createYmd" />
+    <result column="bill_no" jdbcType="VARCHAR" property="billNo" />
+  </resultMap>
+
+  <select id="countRechargeAmount" parameterType="java.lang.String" resultType="java.math.BigDecimal">
+      SELECT
+      SUM(IFNULL(recharge_num, 0.00))
+      FROM sys_account_recharge_record
+    <if test="_parameter!= null"> where advertiser_id = #{_parameter} </if>
+  </select>
+
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    recharge_id, advertiser_id, advertiser_phone, recharge_before, recharge_back, recharge_num, 
+    create_time, transaction_serial_number, remark, create_ymd, bill_no
+  </sql>
+  <select id="selectByExample" parameterType="com.xiaoma.bean.bo.SysAccountRechargeRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_account_recharge_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_account_recharge_record
+    where recharge_id = #{rechargeId}
+  </select>
+
+  <insert id="insert" parameterType="com.xiaoma.bean.po.SysAccountRechargeRecord">
+    insert into sys_account_recharge_record (recharge_id, advertiser_id, advertiser_phone, 
+      recharge_before, recharge_back, recharge_num, 
+      create_time, transaction_serial_number, 
+      remark, create_ymd, bill_no
+      )
+    values (#{rechargeId}, #{advertiserId}, #{advertiserPhone}, 
+      #{rechargeBefore}, #{rechargeBack}, #{rechargeNum}, 
+      #{createTime}, #{transactionSerialNumber}, 
+      #{remark}, #{createYmd}, #{billNo}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xiaoma.bean.po.SysAccountRechargeRecord">
+    insert into sys_account_recharge_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rechargeId != null">
+        recharge_id,
+      </if>
+      <if test="advertiserId != null">
+        advertiser_id,
+      </if>
+      <if test="advertiserPhone != null">
+        advertiser_phone,
+      </if>
+      <if test="rechargeBefore != null">
+        recharge_before,
+      </if>
+      <if test="rechargeBack != null">
+        recharge_back,
+      </if>
+      <if test="rechargeNum != null">
+        recharge_num,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="transactionSerialNumber != null">
+        transaction_serial_number,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createYmd != null">
+        create_ymd,
+      </if>
+      <if test="billNo != null">
+        bill_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rechargeId != null">
+        #{rechargeId},
+      </if>
+      <if test="advertiserId != null">
+        #{advertiserId},
+      </if>
+      <if test="advertiserPhone != null">
+        #{advertiserPhone},
+      </if>
+      <if test="rechargeBefore != null">
+        #{rechargeBefore},
+      </if>
+      <if test="rechargeBack != null">
+        #{rechargeBack},
+      </if>
+      <if test="rechargeNum != null">
+        #{rechargeNum},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="transactionSerialNumber != null">
+        #{transactionSerialNumber},
+      </if>
+      <if test="remark != null">
+        #{remark},
+      </if>
+      <if test="createYmd != null">
+        #{createYmd},
+      </if>
+      <if test="billNo != null">
+        #{billNo},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xiaoma.bean.bo.SysAccountRechargeRecordExample" resultType="java.lang.Integer">
+    select count(*) from sys_account_recharge_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_account_recharge_record
+    <set>
+      <if test="record.rechargeId != null">
+        recharge_id = #{record.rechargeId},
+      </if>
+      <if test="record.advertiserId != null">
+        advertiser_id = #{record.advertiserId},
+      </if>
+      <if test="record.advertiserPhone != null">
+        advertiser_phone = #{record.advertiserPhone},
+      </if>
+      <if test="record.rechargeBefore != null">
+        recharge_before = #{record.rechargeBefore},
+      </if>
+      <if test="record.rechargeBack != null">
+        recharge_back = #{record.rechargeBack},
+      </if>
+      <if test="record.rechargeNum != null">
+        recharge_num = #{record.rechargeNum},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime},
+      </if>
+      <if test="record.transactionSerialNumber != null">
+        transaction_serial_number = #{record.transactionSerialNumber},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark},
+      </if>
+      <if test="record.createYmd != null">
+        create_ymd = #{record.createYmd},
+      </if>
+      <if test="record.billNo != null">
+        bill_no = #{record.billNo},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_account_recharge_record
+    set recharge_id = #{record.rechargeId},
+      advertiser_id = #{record.advertiserId},
+      advertiser_phone = #{record.advertiserPhone},
+      recharge_before = #{record.rechargeBefore},
+      recharge_back = #{record.rechargeBack},
+      recharge_num = #{record.rechargeNum},
+      create_time = #{record.createTime},
+      transaction_serial_number = #{record.transactionSerialNumber},
+      remark = #{record.remark},
+      create_ymd = #{record.createYmd},
+      bill_no = #{record.billNo}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiaoma.bean.po.SysAccountRechargeRecord">
+    update sys_account_recharge_record
+    <set>
+      <if test="advertiserId != null">
+        advertiser_id = #{advertiserId},
+      </if>
+      <if test="advertiserPhone != null">
+        advertiser_phone = #{advertiserPhone},
+      </if>
+      <if test="rechargeBefore != null">
+        recharge_before = #{rechargeBefore},
+      </if>
+      <if test="rechargeBack != null">
+        recharge_back = #{rechargeBack},
+      </if>
+      <if test="rechargeNum != null">
+        recharge_num = #{rechargeNum},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="transactionSerialNumber != null">
+        transaction_serial_number = #{transactionSerialNumber},
+      </if>
+      <if test="remark != null">
+        remark = #{remark},
+      </if>
+      <if test="createYmd != null">
+        create_ymd = #{createYmd},
+      </if>
+      <if test="billNo != null">
+        bill_no = #{billNo},
+      </if>
+    </set>
+    where recharge_id = #{rechargeId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xiaoma.bean.po.SysAccountRechargeRecord">
+    update sys_account_recharge_record
+    set advertiser_id = #{advertiserId},
+      advertiser_phone = #{advertiserPhone},
+      recharge_before = #{rechargeBefore},
+      recharge_back = #{rechargeBack},
+      recharge_num = #{rechargeNum},
+      create_time = #{createTime},
+      transaction_serial_number = #{transactionSerialNumber},
+      remark = #{remark},
+      create_ymd = #{createYmd},
+      bill_no = #{billNo}
+    where recharge_id = #{rechargeId}
+  </update>
+</mapper>

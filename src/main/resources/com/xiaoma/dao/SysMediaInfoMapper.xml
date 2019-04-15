@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoma.dao.SysMediaInfoMapper">
+  <resultMap id="BaseResultMap" type="com.xiaoma.bean.po.SysMediaInfo">
+    <id column="media_id" jdbcType="VARCHAR" property="mediaId" />
+    <result column="media_owner_id" jdbcType="VARCHAR" property="mediaOwnerId" />
+    <result column="media_phone" jdbcType="VARCHAR" property="mediaPhone" />
+    <result column="media_name" jdbcType="VARCHAR" property="mediaName" />
+    <result column="media_type_id" jdbcType="BIGINT" property="mediaTypeId" />
+    <result column="advert_position" jdbcType="VARCHAR" property="advertPosition" />
+    <result column="advert_show_type" jdbcType="VARCHAR" property="advertShowType" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="media_key" jdbcType="VARCHAR" property="mediaKey" />
+
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    media_id, media_owner_id, media_phone, media_name, media_type_id, advert_position, 
+    advert_show_type, create_time, update_time, status, media_key
+  </sql>
+  <select id="selectByExample" parameterType="com.xiaoma.bean.bo.SysMediaInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_media_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_media_info
+    where media_id = #{mediaId}
+  </select>
+
+  <insert id="insert" parameterType="com.xiaoma.bean.po.SysMediaInfo">
+    insert into sys_media_info (media_id, media_owner_id, media_phone, 
+      media_name, media_type_id, advert_position, 
+      advert_show_type, create_time, update_time, 
+      status,media_key
+      )
+    values (#{mediaId}, #{mediaOwnerId}, #{mediaPhone}, 
+      #{mediaName}, #{mediaTypeId}, #{advertPosition}, 
+      #{advertShowType}, #{createTime}, #{updateTime}, 
+      #{status},#{mediaKey})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xiaoma.bean.po.SysMediaInfo">
+    insert into sys_media_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mediaId != null">
+        media_id,
+      </if>
+      <if test="mediaOwnerId != null">
+        media_owner_id,
+      </if>
+      <if test="mediaPhone != null">
+        media_phone,
+      </if>
+      <if test="mediaName != null">
+        media_name,
+      </if>
+      <if test="mediaTypeId != null">
+        media_type_id,
+      </if>
+      <if test="advertPosition != null">
+        advert_position,
+      </if>
+      <if test="advertShowType != null">
+        advert_show_type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="mediaKey != null">
+        media_key,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mediaId != null">
+        #{mediaId},
+      </if>
+      <if test="mediaOwnerId != null">
+        #{mediaOwnerId},
+      </if>
+      <if test="mediaPhone != null">
+        #{mediaPhone},
+      </if>
+      <if test="mediaName != null">
+        #{mediaName},
+      </if>
+      <if test="mediaTypeId != null">
+        #{mediaTypeId},
+      </if>
+      <if test="advertPosition != null">
+        #{advertPosition},
+      </if>
+      <if test="advertShowType != null">
+        #{advertShowType},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime},
+      </if>
+      <if test="status != null">
+        #{status},
+      </if>
+      <if test="mediaKey != null">
+        #{mediaKey},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xiaoma.bean.bo.SysMediaInfoExample" resultType="java.lang.Integer">
+    select count(*) from sys_media_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_media_info
+    <set>
+      <if test="record.mediaId != null">
+        media_id = #{record.mediaId},
+      </if>
+      <if test="record.mediaOwnerId != null">
+        media_owner_id = #{record.mediaOwnerId},
+      </if>
+      <if test="record.mediaPhone != null">
+        media_phone = #{record.mediaPhone},
+      </if>
+      <if test="record.mediaName != null">
+        media_name = #{record.mediaName},
+      </if>
+      <if test="record.mediaTypeId != null">
+        media_type_id = #{record.mediaTypeId},
+      </if>
+      <if test="record.advertPosition != null">
+        advert_position = #{record.advertPosition},
+      </if>
+      <if test="record.advertShowType != null">
+        advert_show_type = #{record.advertShowType},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status},
+      </if>
+      <if test="mediaKey != null">
+        media_key = #{record.mediaKey},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_media_info
+    set media_id = #{record.mediaId},
+      media_owner_id = #{record.mediaOwnerId},
+      media_phone = #{record.mediaPhone},
+      media_name = #{record.mediaName},
+      media_type_id = #{record.mediaTypeId},
+      advert_position = #{record.advertPosition},
+      advert_show_type = #{record.advertShowType},
+      create_time = #{record.createTime},
+      update_time = #{record.updateTime},
+      status = #{record.status},
+      media_key = #{record.mediaKey},
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiaoma.bean.po.SysMediaInfo">
+    update sys_media_info
+    <set>
+      <if test="mediaOwnerId != null">
+        media_owner_id = #{mediaOwnerId},
+      </if>
+      <if test="mediaPhone != null">
+        media_phone = #{mediaPhone},
+      </if>
+      <if test="mediaName != null">
+        media_name = #{mediaName},
+      </if>
+      <if test="mediaTypeId != null">
+        media_type_id = #{mediaTypeId},
+      </if>
+      <if test="advertPosition != null">
+        advert_position = #{advertPosition},
+      </if>
+      <if test="advertShowType != null">
+        advert_show_type = #{advertShowType},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime},
+      </if>
+      <if test="status != null">
+        status = #{status},
+      </if>
+      <if test="mediaKey != null">
+        media_key = #{mediaKey},
+      </if>
+    </set>
+    where media_id = #{mediaId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xiaoma.bean.po.SysMediaInfo">
+    update sys_media_info
+    set media_owner_id = #{mediaOwnerId},
+      media_phone = #{mediaPhone},
+      media_name = #{mediaName},
+      media_type_id = #{mediaTypeId},
+      advert_position = #{advertPosition},
+      advert_show_type = #{advertShowType},
+      create_time = #{createTime},
+      update_time = #{updateTime},
+      media_key = #{mediaKey},
+      status = #{status}
+    where media_id = #{mediaId}
+  </update>
+</mapper>

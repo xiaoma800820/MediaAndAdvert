@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoma.dao.SysMediaAdvertPutMapper">
+  <resultMap id="BaseResultMap" type="com.xiaoma.bean.po.SysMediaAdvertPut">
+    <id column="media_advert_id" jdbcType="BIGINT" property="mediaAdvertId" />
+    <result column="advert_id" jdbcType="VARCHAR" property="advertId" />
+    <result column="advert_name" jdbcType="VARCHAR" property="advertName" />
+    <result column="weight_factor" jdbcType="INTEGER" property="weightFactor" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="media_plan_id" jdbcType="VARCHAR" property="mediaPlanId" />
+    <result column="advert_url" jdbcType="VARCHAR" property="advertUrl" />
+    <result column="advert_show_type" jdbcType="VARCHAR" property="advertShowType" />
+    <result column="key_id" jdbcType="VARCHAR" property="keyId" />
+
+  </resultMap>
+
+  <!-- 批量插入广告投放信息 -->
+  <insert id="insertByMediaAdvertPutList" parameterType="java.util.List">
+    INSERT INTO sys_media_advert_put (
+    media_advert_id, advert_id, advert_name, weight_factor, status, create_time, update_time, media_plan_id,
+    advert_url, advert_show_type, key_id
+    )
+    VALUES
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.mediaAdvertId},#{item.advertId},#{item.advertName},
+      #{item.weightFactor},#{item.status},#{item.createTime},#{item.updateTime},#{item.mediaPlanId},
+      #{item.advertUrl}, #{item.advertShowType}, #{item.keyId}
+      )
+    </foreach>
+  </insert>
+  <!-- 根据计划Id查询所有的广告信息 -->
+  <select id="selectByPlanId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_media_advert_put
+    where status = 1 and media_plan_id = #{planId}
+  </select>
+
+
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    media_advert_id, advert_id, advert_name, weight_factor, status, create_time, update_time, media_plan_id,
+    advert_url, advert_show_type, key_id
+  </sql>
+  <select id="selectByExample" parameterType="com.xiaoma.bean.bo.SysMediaAdvertPutExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_media_advert_put
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_media_advert_put
+    where media_advert_id = #{mediaAdvertId}
+  </select>
+
+  <insert id="insert" parameterType="com.xiaoma.bean.po.SysMediaAdvertPut">
+    insert into sys_media_advert_put (media_advert_id, advert_id, advert_name, weight_factor,
+      status, create_time, update_time, 
+      media_plan_id)
+    values (#{mediaAdvertId}, #{advertId}, #{advertName}, #{weightFactor},
+      #{status}, #{createTime}, #{updateTime}, 
+      #{mediaPlanId})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xiaoma.bean.po.SysMediaAdvertPut">
+    insert into sys_media_advert_put
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mediaAdvertId != null">
+        media_advert_id,
+      </if>
+      <if test="advertId != null">
+        advert_id,
+      </if>
+      <if test="weightFactor != null">
+        weight_factor,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="mediaPlanId != null">
+        media_plan_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mediaAdvertId != null">
+        #{mediaAdvertId},
+      </if>
+      <if test="advertId != null">
+        #{advertId},
+      </if>
+      <if test="weightFactor != null">
+        #{weightFactor},
+      </if>
+      <if test="status != null">
+        #{status},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime},
+      </if>
+      <if test="mediaPlanId != null">
+        #{mediaPlanId},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xiaoma.bean.bo.SysMediaAdvertPutExample" resultType="java.lang.Integer">
+    select count(*) from sys_media_advert_put
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_media_advert_put
+    <set>
+      <if test="record.mediaAdvertId != null">
+        media_advert_id = #{record.mediaAdvertId},
+      </if>
+      <if test="record.advertId != null">
+        advert_id = #{record.advertId},
+      </if>
+      <if test="record.weightFactor != null">
+        weight_factor = #{record.weightFactor},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime},
+      </if>
+      <if test="record.mediaPlanId != null">
+        media_plan_id = #{record.mediaPlanId},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_media_advert_put
+    set media_advert_id = #{record.mediaAdvertId},
+      advert_id = #{record.advertId},
+      weight_factor = #{record.weightFactor},
+      status = #{record.status},
+      create_time = #{record.createTime},
+      update_time = #{record.updateTime},
+      media_plan_id = #{record.mediaPlanId}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiaoma.bean.po.SysMediaAdvertPut">
+    update sys_media_advert_put
+    <set>
+      <if test="advertId != null">
+        advert_id = #{advertId},
+      </if>
+      <if test="weightFactor != null">
+        weight_factor = #{weightFactor},
+      </if>
+      <if test="status != null">
+        status = #{status},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime},
+      </if>
+      <if test="mediaPlanId != null">
+        media_plan_id = #{mediaPlanId},
+      </if>
+    </set>
+    where media_advert_id = #{mediaAdvertId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xiaoma.bean.po.SysMediaAdvertPut">
+    update sys_media_advert_put
+    set advert_id = #{advertId},
+      weight_factor = #{weightFactor},
+      status = #{status},
+      create_time = #{createTime},
+      update_time = #{updateTime},
+      media_plan_id = #{mediaPlanId}
+    where media_advert_id = #{mediaAdvertId}
+  </update>
+</mapper>

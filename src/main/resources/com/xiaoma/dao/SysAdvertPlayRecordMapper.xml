@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoma.dao.SysAdvertPlayRecordMapper">
+  <resultMap id="BaseResultMap" type="com.xiaoma.bean.po.SysAdvertPlayRecord">
+    <id column="play_record_id" jdbcType="BIGINT" property="playRecordId" />
+    <result column="advert_id" jdbcType="VARCHAR" property="advertId" />
+    <result column="media_own_key" jdbcType="VARCHAR" property="mediaOwnKey" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="play_type" jdbcType="INTEGER" property="playType" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="plan_id" jdbcType="VARCHAR" property="planId" />
+  </resultMap>
+
+  <!-- 统计昨天广告播放记录用户广告主结算 -->
+  <select id="statisticsAdvertsByAdvertiser" resultType="com.xiaoma.bean.bo.SysAdvertAdvertiserBO">
+    SELECT
+        advert_id AS advertId,
+        SUM(num) AS playNum
+    FROM sys_advert_play_record
+    where TO_DAYS(create_time) = TO_DAYS(NOW()) - 1 GROUP BY advert_id
+  </select>
+
+  <!-- 统计昨天的广告播放记录用户媒体主结算 -->
+  <select id="statisticsAdvertsByMedia" resultType="com.xiaoma.bean.bo.SysAdvertMediaBO">
+    SELECT
+    plan_id AS planId,
+    advert_id AS advertId,
+    SUM(num) AS playNum
+    FROM sys_advert_play_record
+    where TO_DAYS(create_time) = TO_DAYS(NOW()) - 1 GROUP BY advert_id,plan_id
+  </select>
+
+  <select id="cpuntByAdvertIdDay" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*) from sys_advert_play_record
+    where advert_id = #{advertId} and TO_DAYS(create_time) = TO_DAYS(NOW())
+  </select>
+
+  <select id="cpuntByPlanIdDay" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*) from sys_advert_play_record
+    where plan_id = #{planId} and TO_DAYS(create_time) = TO_DAYS(NOW())
+  </select>
+
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    play_record_id, advert_id, media_own_key, num, play_type, create_time, plan_id
+  </sql>
+  <select id="selectByExample" parameterType="com.xiaoma.bean.bo.SysAdvertPlayRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_advert_play_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_advert_play_record
+    where play_record_id = #{playRecordId}
+  </select>
+
+  <insert id="insert" parameterType="com.xiaoma.bean.po.SysAdvertPlayRecord">
+    insert into sys_advert_play_record (play_record_id, advert_id, media_own_key, 
+      num, play_type, create_time,plan_id
+      )
+    values (#{playRecordId}, #{advertId}, #{mediaOwnKey}, 
+      #{num}, #{playType}, #{createTime}, #{planId}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xiaoma.bean.po.SysAdvertPlayRecord">
+    insert into sys_advert_play_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="playRecordId != null">
+        play_record_id,
+      </if>
+      <if test="advertId != null">
+        advert_id,
+      </if>
+      <if test="mediaOwnKey != null">
+        media_own_key,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="playType != null">
+        play_type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="playRecordId != null">
+        #{playRecordId},
+      </if>
+      <if test="advertId != null">
+        #{advertId},
+      </if>
+      <if test="mediaOwnKey != null">
+        #{mediaOwnKey},
+      </if>
+      <if test="num != null">
+        #{num},
+      </if>
+      <if test="playType != null">
+        #{playType},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xiaoma.bean.bo.SysAdvertPlayRecordExample" resultType="java.lang.Integer">
+    select count(*) from sys_advert_play_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_advert_play_record
+    <set>
+      <if test="record.playRecordId != null">
+        play_record_id = #{record.playRecordId},
+      </if>
+      <if test="record.advertId != null">
+        advert_id = #{record.advertId},
+      </if>
+      <if test="record.mediaOwnKey != null">
+        media_own_key = #{record.mediaOwnKey},
+      </if>
+      <if test="record.num != null">
+        num = #{record.num},
+      </if>
+      <if test="record.playType != null">
+        play_type = #{record.playType},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_advert_play_record
+    set play_record_id = #{record.playRecordId},
+      advert_id = #{record.advertId},
+      media_own_key = #{record.mediaOwnKey},
+      num = #{record.num},
+      play_type = #{record.playType},
+      create_time = #{record.createTime}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiaoma.bean.po.SysAdvertPlayRecord">
+    update sys_advert_play_record
+    <set>
+      <if test="advertId != null">
+        advert_id = #{advertId},
+      </if>
+      <if test="mediaOwnKey != null">
+        media_own_key = #{mediaOwnKey},
+      </if>
+      <if test="num != null">
+        num = #{num},
+      </if>
+      <if test="playType != null">
+        play_type = #{playType},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+    </set>
+    where play_record_id = #{playRecordId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xiaoma.bean.po.SysAdvertPlayRecord">
+    update sys_advert_play_record
+    set advert_id = #{advertId},
+      media_own_key = #{mediaOwnKey},
+      num = #{num},
+      play_type = #{playType},
+      create_time = #{createTime}
+    where play_record_id = #{playRecordId}
+  </update>
+</mapper>

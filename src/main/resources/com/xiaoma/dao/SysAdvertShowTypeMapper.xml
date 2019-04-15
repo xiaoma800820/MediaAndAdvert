@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoma.dao.SysAdvertShowTypeMapper">
+  <resultMap id="BaseResultMap" type="com.xiaoma.bean.po.SysAdvertShowType">
+    <id column="show_code" jdbcType="VARCHAR" property="showCode" />
+    <result column="show_name" jdbcType="VARCHAR" property="showName" />
+    <result column="show_desc" jdbcType="VARCHAR" property="showDesc" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="advert_dr" jdbcType="INTEGER" property="advertDr" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    show_code, show_name, show_desc, create_time, update_time, advert_dr
+  </sql>
+  <select id="selectByExample" parameterType="com.xiaoma.bean.bo.SysAdvertShowTypeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_advert_show_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_advert_show_type
+    where show_code = #{showCode}
+  </select>
+
+  <insert id="insert" parameterType="com.xiaoma.bean.po.SysAdvertShowType">
+    insert into sys_advert_show_type (show_code, show_name, 
+      show_desc, create_time, update_time, 
+      advert_dr)
+    values (#{showCode}, #{showName}, 
+      #{showDesc}, #{createTime}, #{updateTime}, 
+      #{advertDr})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xiaoma.bean.po.SysAdvertShowType">
+    insert into sys_advert_show_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="showCode != null">
+        show_code,
+      </if>
+      <if test="showName != null">
+        show_name,
+      </if>
+      <if test="showDesc != null">
+        show_desc,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="advertDr != null">
+        advert_dr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="showCode != null">
+        #{showCode},
+      </if>
+      <if test="showName != null">
+        #{showName},
+      </if>
+      <if test="showDesc != null">
+        #{showDesc},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime},
+      </if>
+      <if test="advertDr != null">
+        #{advertDr},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xiaoma.bean.bo.SysAdvertShowTypeExample" resultType="java.lang.Integer">
+    select count(*) from sys_advert_show_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_advert_show_type
+    <set>
+      <if test="record.showCode != null">
+        show_code = #{record.showCode},
+      </if>
+      <if test="record.showName != null">
+        show_name = #{record.showName},
+      </if>
+      <if test="record.showDesc != null">
+        show_desc = #{record.showDesc},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime},
+      </if>
+      <if test="record.advertDr != null">
+        advert_dr = #{record.advertDr},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_advert_show_type
+    set
+      show_code = #{record.showCode},
+      show_name = #{record.showName},
+      show_desc = #{record.showDesc},
+      create_time = #{record.createTime},
+      update_time = #{record.updateTime},
+      advert_dr = #{record.advertDr}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiaoma.bean.po.SysAdvertShowType">
+    update sys_advert_show_type
+    <set>
+      <if test="showName != null">
+        show_name = #{showName},
+      </if>
+      <if test="showDesc != null">
+        show_desc = #{showDesc},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime},
+      </if>
+      <if test="advertDr != null">
+        advert_dr = #{advertDr},
+      </if>
+    </set>
+    where show_code = #{showCode}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xiaoma.bean.po.SysAdvertShowType">
+    update sys_advert_show_type
+    set
+      show_name = #{showName},
+      show_desc = #{showDesc},
+      create_time = #{createTime},
+      update_time = #{updateTime},
+      advert_dr = #{advertDr}
+    where show_code = #{showCode}
+  </update>
+</mapper>

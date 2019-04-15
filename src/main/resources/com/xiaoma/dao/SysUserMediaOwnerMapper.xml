@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoma.dao.SysUserMediaOwnerMapper">
+  <resultMap id="BaseResultMap" type="com.xiaoma.bean.po.SysUserMediaOwner">
+    <id column="media_owner_id" jdbcType="VARCHAR" property="mediaOwnerId" />
+    <result column="payee_id" jdbcType="VARCHAR" property="payeeId" />
+    <result column="media_phone" jdbcType="VARCHAR" property="mediaPhone" />
+    <result column="contacts_name" jdbcType="VARCHAR" property="contactsName" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="current_balance" jdbcType="BIGINT" property="currentBalance" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="password" jdbcType="VARCHAR" property="passWord" />
+  </resultMap>
+
+  <select id="selectByPhoneNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_user_media_owner
+    where media_phone = #{_parameter}
+  </select>
+
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    media_owner_id, payee_id, media_phone, contacts_name, sex, current_balance, create_time, 
+    update_time, password
+  </sql>
+  <select id="selectByExample" parameterType="com.xiaoma.bean.bo.SysUserMediaOwnerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_user_media_owner
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_media_owner
+    where media_owner_id = #{mediaOwnerId}
+  </select>
+
+  <insert id="insert" parameterType="com.xiaoma.bean.po.SysUserMediaOwner">
+    insert into sys_user_media_owner (
+      media_owner_id, payee_id, media_phone,
+      contacts_name, sex, current_balance, 
+      create_time, update_time, password)
+    values (#{mediaOwnerId}, #{payeeId}, #{mediaPhone}, 
+      #{contactsName}, #{sex}, #{currentBalance}, 
+      #{createTime}, #{updateTime}, #{passWord})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xiaoma.bean.po.SysUserMediaOwner">
+    insert into sys_user_media_owner
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mediaOwnerId != null">
+        media_owner_id,
+      </if>
+      <if test="payeeId != null">
+        payee_id,
+      </if>
+      <if test="mediaPhone != null">
+        media_phone,
+      </if>
+      <if test="contactsName != null">
+        contacts_name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="currentBalance != null">
+        current_balance,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mediaOwnerId != null">
+        #{mediaOwnerId},
+      </if>
+      <if test="payeeId != null">
+        #{payeeId},
+      </if>
+      <if test="mediaPhone != null">
+        #{mediaPhone},
+      </if>
+      <if test="contactsName != null">
+        #{contactsName},
+      </if>
+      <if test="sex != null">
+        #{sex},
+      </if>
+      <if test="currentBalance != null">
+        #{currentBalance},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xiaoma.bean.bo.SysUserMediaOwnerExample" resultType="java.lang.Integer">
+    select count(*) from sys_user_media_owner
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_user_media_owner
+    <set>
+      <if test="record.mediaOwnerId != null">
+        media_owner_id = #{record.mediaOwnerId},
+      </if>
+      <if test="record.payeeId != null">
+        payee_id = #{record.payeeId},
+      </if>
+      <if test="record.mediaPhone != null">
+        media_phone = #{record.mediaPhone},
+      </if>
+      <if test="record.contactsName != null">
+        contacts_name = #{record.contactsName},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex},
+      </if>
+      <if test="record.currentBalance != null">
+        current_balance = #{record.currentBalance},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime},
+      </if>
+      <if test="record.passWord != null">
+        password = #{record.passWord},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_user_media_owner
+    set media_owner_id = #{record.mediaOwnerId},
+      payee_id = #{record.payeeId},
+      media_phone = #{record.mediaPhone},
+      contacts_name = #{record.contactsName},
+      sex = #{record.sex},
+      password = #{record.passWord},
+      current_balance = #{record.currentBalance},
+      create_time = #{record.createTime},
+      update_time = #{record.updateTime}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiaoma.bean.po.SysUserMediaOwner">
+    update sys_user_media_owner
+    <set>
+      <if test="payeeId != null">payee_id = #{payeeId},</if>
+      <if test="mediaPhone != null">media_phone = #{mediaPhone},</if>
+      <if test="contactsName != null">contacts_name = #{contactsName},</if>
+      <if test="sex != null">sex = #{sex},</if>
+      <if test="currentBalance != null">current_balance = #{currentBalance},</if>
+      <if test="createTime != null">create_time = #{createTime},</if>
+      <if test="updateTime != null">update_time = #{updateTime},</if>
+      <if test="passWord != null">password = #{passWord},</if>
+    </set>
+    where media_owner_id = #{mediaOwnerId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xiaoma.bean.po.SysUserMediaOwner">
+    update sys_user_media_owner
+    set payee_id = #{payeeId},
+      media_phone = #{mediaPhone},
+      contacts_name = #{contactsName},
+      sex = #{sex},
+      current_balance = #{currentBalance},
+      create_time = #{createTime},
+      password = #{passWord},
+      update_time = #{updateTime}
+    where media_owner_id = #{mediaOwnerId}
+  </update>
+</mapper>

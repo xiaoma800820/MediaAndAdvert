@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoma.dao.SysAdvertPutPlanMapper">
+  <resultMap id="BaseResultMap" type="com.xiaoma.bean.po.SysAdvertPutPlan">
+    <id column="advert_plan_id" jdbcType="VARCHAR" property="advertPlanId" />
+    <result column="advert_id" jdbcType="VARCHAR" property="advertId" />
+    <result column="billing_type" jdbcType="VARCHAR" property="billingType" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="quota" jdbcType="DECIMAL" property="quota" />
+    <result column="expansivity" jdbcType="DECIMAL" property="expansivity" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="settle_expansivity" jdbcType="DECIMAL" property="settleExpansivity" />
+    <result column="balance" jdbcType="DECIMAL" property="balance" />
+    <result column="advertiser_id" jdbcType="VARCHAR" property="advertiserId" />
+    <result column="advertiser_phone" jdbcType="VARCHAR" property="advertiserPhone" />
+    <result column="advert_name" jdbcType="VARCHAR" property="advertName" />
+    <result column="update_ymd" jdbcType="VARCHAR" property="updateYMD"/>
+  </resultMap>
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    advert_plan_id, advert_id, billing_type, price, quota, expansivity, create_time, 
+    update_time, status, settle_expansivity, balance,advertiser_id,advertiser_phone,
+    advert_name, update_ymd
+  </sql>
+  <select id="selectByExample" parameterType="com.xiaoma.bean.bo.SysAdvertPutPlanExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_advert_put_plan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_advert_put_plan
+    where advert_plan_id = #{advertPlanId}
+  </select>
+
+  <select id="selectByAdvertId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_advert_put_plan
+    where advert_id = #{advertId}
+  </select>
+
+  <insert id="insert" parameterType="com.xiaoma.bean.po.SysAdvertPutPlan">
+    insert into sys_advert_put_plan (
+      advert_plan_id, advert_id, billing_type,
+      price, quota, expansivity, 
+      create_time, update_time, status, 
+      settle_expansivity,balance,advertiser_id,
+      advertiser_phone,advert_name,update_ymd)
+    values (#{advertPlanId}, #{advertId}, #{billingType}, 
+      #{price}, #{quota}, #{expansivity}, 
+      #{createTime}, #{updateTime}, #{status}, 
+      #{settleExpansivity},#{balance},#{advertiserId},
+      #{advertiserPhone},#{advertName},#{updateYMD})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xiaoma.bean.po.SysAdvertPutPlan">
+    insert into sys_advert_put_plan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="advertPlanId != null">
+        advert_plan_id,
+      </if>
+      <if test="advertId != null">
+        advert_id,
+      </if>
+      <if test="billingType != null">
+        billing_type,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="quota != null">
+        quota,
+      </if>
+      <if test="expansivity != null">
+        expansivity,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="settleExpansivity != null">
+        settle_expansivity,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+      <if test="updateYMD != null">
+        update_ymd,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="advertPlanId != null">
+        #{advertPlanId},
+      </if>
+      <if test="advertId != null">
+        #{advertId},
+      </if>
+      <if test="billingType != null">
+        #{billingType},
+      </if>
+      <if test="price != null">
+        #{price},
+      </if>
+      <if test="quota != null">
+        #{quota},
+      </if>
+      <if test="expansivity != null">
+        #{expansivity},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime},
+      </if>
+      <if test="status != null">
+        #{status},
+      </if>
+      <if test="settleExpansivity != null">
+        #{settleExpansivity},
+      </if>
+      <if test="balance != null">
+        #{balance},
+      </if>
+      <if test="updateYMD != null">
+        #{updateYMD},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xiaoma.bean.bo.SysAdvertPutPlanExample" resultType="java.lang.Integer">
+    select count(*) from sys_advert_put_plan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_advert_put_plan
+    <set>
+      <if test="record.advertPlanId != null">
+        advert_plan_id = #{record.advertPlanId},
+      </if>
+      <if test="record.advertId != null">
+        advert_id = #{record.advertId},
+      </if>
+      <if test="record.billingType != null">
+        billing_type = #{record.billingType},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price},
+      </if>
+      <if test="record.quota != null">
+        quota = #{record.quota},
+      </if>
+      <if test="record.expansivity != null">
+        expansivity = #{record.expansivity},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status},
+      </if>
+      <if test="record.settleExpansivity != null">
+        settle_expansivity = #{record.settleExpansivity},
+      </if>
+      <if test="record.balance != null">
+        balance = #{record.balance},
+      </if>
+      <if test="record.updateYMD != null">
+        update_ymd = #{record.updateYMD},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_advert_put_plan
+    set advert_plan_id = #{record.advertPlanId},
+      advert_id = #{record.advertId},
+      billing_type = #{record.billingType},
+      price = #{record.price},
+      quota = #{record.quota},
+      expansivity = #{record.expansivity},
+      create_time = #{record.createTime},
+      update_time = #{record.updateTime},
+      status = #{record.status},
+      balance = #{record.balance},
+      settle_expansivity = #{record.settleExpansivity},
+      update_ymd = #{record.updateYMD}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiaoma.bean.po.SysAdvertPutPlan">
+    update sys_advert_put_plan
+    <set>
+      <if test="advertId != null">
+        advert_id = #{advertId},
+      </if>
+      <if test="billingType != null">
+        billing_type = #{billingType},
+      </if>
+      <if test="price != null">
+        price = #{price},
+      </if>
+      <if test="quota != null">
+        quota = #{quota},
+      </if>
+      <if test="expansivity != null">
+        expansivity = #{expansivity},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime},
+      </if>
+      <if test="status != null">
+        status = #{status},
+      </if>
+      <if test="settleExpansivity != null">
+        settle_expansivity = #{settleExpansivity},
+      </if>
+      <if test="balance != null">
+        balance = #{balance},
+      </if>
+      <if test="record.updateYMD != null">
+        update_ymd = #{updateYMD},
+      </if>
+    </set>
+    where advert_plan_id = #{advertPlanId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xiaoma.bean.po.SysAdvertPutPlan">
+    update sys_advert_put_plan
+    set advert_id = #{advertId},
+      billing_type = #{billingType},
+      price = #{price},
+      quota = #{quota},
+      expansivity = #{expansivity},
+      create_time = #{createTime},
+      update_time = #{updateTime},
+      status = #{status},
+      balance = #{balance},
+      settle_expansivity = #{settleExpansivity},
+      update_ymd = #{updateYMD}
+    where advert_plan_id = #{advertPlanId}
+  </update>
+</mapper>

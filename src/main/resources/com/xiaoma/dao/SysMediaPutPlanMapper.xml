@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoma.dao.SysMediaPutPlanMapper">
+  <resultMap id="BaseResultMap" type="com.xiaoma.bean.po.SysMediaPutPlan">
+    <id column="media_plan_id" jdbcType="VARCHAR" property="mediaPlanId" />
+    <result column="media_id" jdbcType="VARCHAR" property="mediaId" />
+    <result column="media_name" jdbcType="VARCHAR" property="mediaName" />
+    <result column="billing_type" jdbcType="VARCHAR" property="billingType" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="quota" jdbcType="DECIMAL" property="quota" />
+    <result column="expansivity" jdbcType="DECIMAL" property="expansivity" />
+    <result column="settle_expansivity" jdbcType="DECIMAL" property="settleExpansivity" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="balance" jdbcType="DECIMAL" property="balance" />
+    <result column="media_owner_id" jdbcType="VARCHAR" property="mediaOwnerId" />
+    <result column="media_phone" jdbcType="VARCHAR" property="mediaPhone" />
+    <result column="update_ymd" jdbcType="VARCHAR" property="updateYMD"/>
+  </resultMap>
+
+
+
+
+
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    media_plan_id, media_id, media_name, billing_type, price, quota, expansivity, settle_expansivity, 
+    create_time, update_time, status, balance,media_owner_id,media_phone, update_ymd
+  </sql>
+  <select id="selectByExample" parameterType="com.xiaoma.bean.bo.SysMediaPutPlanExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_media_put_plan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_media_put_plan
+    where media_plan_id = #{mediaPlanId}
+  </select>
+
+  <insert id="insert" parameterType="com.xiaoma.bean.po.SysMediaPutPlan">
+    insert into sys_media_put_plan (media_plan_id, media_id,media_name, billing_type, 
+      price, quota, expansivity, 
+      settle_expansivity, create_time, update_time, 
+      status, balance,media_owner_id,media_phone, update_ymd)
+    values (#{mediaPlanId}, #{mediaId},#{mediaName}, #{billingType}, 
+      #{price}, #{quota}, #{expansivity}, 
+      #{settleExpansivity}, #{createTime}, #{updateTime}, 
+      #{status}, #{balance},#{mediaOwnerId},#{mediaPhone},#{updateYMD})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xiaoma.bean.po.SysMediaPutPlan">
+    insert into sys_media_put_plan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mediaPlanId != null">
+        media_plan_id,
+      </if>
+      <if test="mediaId != null">
+        media_id,
+      </if>
+      <if test="billingType != null">
+        billing_type,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="quota != null">
+        quota,
+      </if>
+      <if test="expansivity != null">
+        expansivity,
+      </if>
+      <if test="settleExpansivity != null">
+        settle_expansivity,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mediaPlanId != null">
+        #{mediaPlanId},
+      </if>
+      <if test="mediaId != null">
+        #{mediaId},
+      </if>
+      <if test="billingType != null">
+        #{billingType},
+      </if>
+      <if test="price != null">
+        #{price},
+      </if>
+      <if test="quota != null">
+        #{quota},
+      </if>
+      <if test="expansivity != null">
+        #{expansivity},
+      </if>
+      <if test="settleExpansivity != null">
+        #{settleExpansivity},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime},
+      </if>
+      <if test="status != null">
+        #{status},
+      </if>
+      <if test="balance != null">
+        #{balance},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xiaoma.bean.bo.SysMediaPutPlanExample" resultType="java.lang.Integer">
+    select count(*) from sys_media_put_plan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_media_put_plan
+    <set>
+      <if test="record.mediaPlanId != null">
+        media_plan_id = #{record.mediaPlanId},
+      </if>
+      <if test="record.mediaId != null">
+        media_id = #{record.mediaId},
+      </if>
+      <if test="record.billingType != null">
+        billing_type = #{record.billingType},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price},
+      </if>
+      <if test="record.quota != null">
+        quota = #{record.quota},
+      </if>
+      <if test="record.expansivity != null">
+        expansivity = #{record.expansivity},
+      </if>
+      <if test="record.settleExpansivity != null">
+        settle_expansivity = #{record.settleExpansivity},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status},
+      </if>
+      <if test="record.balance != null">
+        balance = #{record.balance},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_media_put_plan
+    set media_plan_id = #{record.mediaPlanId},
+      media_id = #{record.mediaId},
+      billing_type = #{record.billingType},
+      price = #{record.price},
+      quota = #{record.quota},
+      expansivity = #{record.expansivity},
+      settle_expansivity = #{record.settleExpansivity},
+      create_time = #{record.createTime},
+      update_time = #{record.updateTime},
+      status = #{record.status},
+      balance = #{record.balance}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiaoma.bean.po.SysMediaPutPlan">
+    update sys_media_put_plan
+    <set>
+      <if test="mediaId != null">
+        media_id = #{mediaId},
+      </if>
+      <if test="billingType != null">
+        billing_type = #{billingType},
+      </if>
+      <if test="price != null">
+        price = #{price},
+      </if>
+      <if test="quota != null">
+        quota = #{quota},
+      </if>
+      <if test="expansivity != null">
+        expansivity = #{expansivity},
+      </if>
+      <if test="settleExpansivity != null">
+        settle_expansivity = #{settleExpansivity},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime},
+      </if>
+      <if test="status != null">
+        status = #{status},
+      </if>
+      <if test="balance != null">
+        balance = #{balance},
+      </if>
+      <if test="updateYMD != null">
+        update_ymd = #{updateYMD},
+      </if>
+    </set>
+    where media_plan_id = #{mediaPlanId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xiaoma.bean.po.SysMediaPutPlan">
+    update sys_media_put_plan
+    set media_id = #{mediaId},
+      billing_type = #{billingType},
+      price = #{price},
+      quota = #{quota},
+      expansivity = #{expansivity},
+      settle_expansivity = #{settleExpansivity},
+      create_time = #{createTime},
+      update_time = #{updateTime},
+      status = #{status},
+      balance = #{balance}
+    where media_plan_id = #{mediaPlanId}
+  </update>
+</mapper>
