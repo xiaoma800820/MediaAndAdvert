@@ -22,6 +22,8 @@ public class SysAdvertInfo {
 
     private Date updateTime;
 
+    private String advertImgUrl;
+
     public String getAdvertId() {
         return advertId;
     }
@@ -92,5 +94,13 @@ public class SysAdvertInfo {
 
     public void setAdvertiserPhone(String advertiserPhone) {
         this.advertiserPhone = advertiserPhone;
+    }
+
+    public String getAdvertImgUrl() {
+        return advertImgUrl;
+    }
+
+    public void setAdvertImgUrl(String advertImgUrl) {
+        this.advertImgUrl = advertImgUrl;
     }
 }

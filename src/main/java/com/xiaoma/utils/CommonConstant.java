@@ -102,12 +102,15 @@ public class CommonConstant {
      * @return 重新编码结果
      */
     public static String getCodeId(String codePrefix,int digits,int currentNum){
-        int curLen = String.valueOf(currentNum).length();
-        for (int i = 0; i < digits - curLen; i++ ){
+        currentNum = currentNum + 1;
+        if (currentNum < 10){
+            codePrefix = codePrefix + "000";
+        }else if (currentNum < 100){
+            codePrefix = codePrefix + "00";
+        }else if (currentNum < 1000){
             codePrefix = codePrefix + "0";
         }
-        int nextNum = 1 + currentNum;
-        String nextCodeId = codePrefix + nextNum;
+        String nextCodeId = codePrefix + currentNum;
         return nextCodeId;
     }
 }

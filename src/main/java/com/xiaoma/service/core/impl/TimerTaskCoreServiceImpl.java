@@ -66,6 +66,9 @@ public class TimerTaskCoreServiceImpl implements TimerTaskCoreService {
             List<SysAccountSettleRecord> settleRecords = new ArrayList<>(sysAdvertPutPlans.size());
             log.info("===循环计算广告计划结算金额开始===" + sysAdvertPutPlans.size());
             for (SysAdvertPutPlan advertPutPlan : sysAdvertPutPlans){
+                if ("cpt".equals(advertPutPlan.getBillingType())){
+                    continue;
+                }
                 SysAccountSettleRecord settleRecord = new SysAccountSettleRecord();
                 //状态是已结算
                 settleRecord.setStatus(CommonConstant.STANDARD_ONE);

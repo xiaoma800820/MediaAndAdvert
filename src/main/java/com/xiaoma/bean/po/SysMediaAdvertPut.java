@@ -26,6 +26,8 @@ public class SysMediaAdvertPut {
 
     private String keyId;
 
+    private String advertImgUrl;
+
     public Long getMediaAdvertId() {
         return mediaAdvertId;
     }
@@ -112,5 +114,13 @@ public class SysMediaAdvertPut {
 
     public void setKeyId(String keyId) {
         this.keyId = keyId;
+    }
+
+    public String getAdvertImgUrl() {
+        return advertImgUrl;
+    }
+
+    public void setAdvertImgUrl(String advertImgUrl) {
+        this.advertImgUrl = advertImgUrl;
     }
 }

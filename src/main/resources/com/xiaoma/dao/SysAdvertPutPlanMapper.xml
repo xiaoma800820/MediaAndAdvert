@@ -303,7 +303,7 @@
       <if test="balance != null">
         balance = #{balance},
       </if>
-      <if test="record.updateYMD != null">
+      <if test="updateYMD != null">
         update_ymd = #{updateYMD},
       </if>
     </set>

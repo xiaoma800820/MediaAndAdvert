@@ -21,6 +21,8 @@ public class AdvertInfoAddParam implements Serializable {
     private String advertUrl;
     @ApiModelProperty(value = "广告类型")
     private String advertShowType;
+    @ApiModelProperty(value = "广告图片上传链接")
+    private String advertImgUrl;
 
     public String getAdvertiserId() {
         return advertiserId;
@@ -62,6 +64,14 @@ public class AdvertInfoAddParam implements Serializable {
         this.advertiserPhone = advertiserPhone;
     }
 
+    public String getAdvertImgUrl() {
+        return advertImgUrl;
+    }
+
+    public void setAdvertImgUrl(String advertImgUrl) {
+        this.advertImgUrl = advertImgUrl;
+    }
+
     @Override
     public String toString() {
         return "AdvertInfoAddParam{" +
@@ -70,6 +80,7 @@ public class AdvertInfoAddParam implements Serializable {
                 ", advertName='" + advertName + '\'' +
                 ", advertUrl='" + advertUrl + '\'' +
                 ", advertShowType='" + advertShowType + '\'' +
+                ", advertImgUrl='" + advertImgUrl + '\'' +
                 '}';
     }
 }

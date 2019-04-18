@@ -19,6 +19,8 @@ public class MediaAdvertVO implements Serializable {
 
     private String advertShowType;
 
+    private String advertImgUrl;
+
     public String getAdvertId() {
         return advertId;
     }
@@ -59,6 +61,14 @@ public class MediaAdvertVO implements Serializable {
         this.planId = planId;
     }
 
+    public String getAdvertImgUrl() {
+        return advertImgUrl;
+    }
+
+    public void setAdvertImgUrl(String advertImgUrl) {
+        this.advertImgUrl = advertImgUrl;
+    }
+
     @Override
     public String toString() {
         return "MediaAdvertVO{" +
@@ -67,6 +77,7 @@ public class MediaAdvertVO implements Serializable {
                 ", advertName='" + advertName + '\'' +
                 ", advertUrl='" + advertUrl + '\'' +
                 ", advertShowType='" + advertShowType + '\'' +
+                ", advertImgUrl='" + advertImgUrl + '\'' +
                 '}';
     }
 }

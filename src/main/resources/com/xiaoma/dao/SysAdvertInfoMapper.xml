@@ -11,6 +11,7 @@
     <result column="advert_status" jdbcType="INTEGER" property="advertStatus" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="advert_img_url" jdbcType="VARCHAR" property="advertImgUrl" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,7 +73,7 @@
   </sql>
   <sql id="Base_Column_List">
     advert_id, advert_name, advertiser_id, advertiser_phone, advert_url, advert_show_type, advert_status, create_time,
-    update_time
+    update_time, advert_img_url
   </sql>
   <select id="selectByExample" parameterType="com.xiaoma.bean.bo.SysAdvertInfoExample" resultMap="BaseResultMap">
     select
@@ -98,58 +99,32 @@
   <insert id="insert" parameterType="com.xiaoma.bean.po.SysAdvertInfo">
     insert into sys_advert_info (advert_id, advert_name, advertiser_id, advertiser_phone, advert_url,
       advert_show_type, advert_status, create_time, 
-      update_time)
+      update_time, advert_img_url)
     values (#{advertId}, #{advertName}, #{advertiserId}, #{advertiserPhone}, #{advertUrl},
       #{advertShowType}, #{advertStatus}, #{createTime}, 
-      #{updateTime})
+      #{updateTime}, #{advertImgUrl})
   </insert>
   <insert id="insertSelective" parameterType="com.xiaoma.bean.po.SysAdvertInfo">
     insert into sys_advert_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="advertId != null">
-        advert_id,
-      </if>
-      <if test="advertName != null">
-        advert_name,
-      </if>
-      <if test="advertUrl != null">
-        advert_url,
-      </if>
-      <if test="advertShowType != null">
-        advert_show_type,
-      </if>
-      <if test="advertStatus != null">
-        advert_status,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
+      <if test="advertId != null">advert_id,</if>
+      <if test="advertName != null">advert_name,</if>
+      <if test="advertUrl != null">advert_url,</if>
+      <if test="advertShowType != null">advert_show_type,</if>
+      <if test="advertStatus != null">advert_status,</if>
+      <if test="createTime != null">create_time,</if>
+      <if test="updateTime != null">update_time,</if>
+      <if test="advertImgUrl != null">advert_img_url,</if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="advertId != null">
-        #{advertId},
-      </if>
-      <if test="advertName != null">
-        #{advertName},
-      </if>
-      <if test="advertUrl != null">
-        #{advertUrl},
-      </if>
-      <if test="advertShowType != null">
-        #{advertShowType},
-      </if>
-      <if test="advertStatus != null">
-        #{advertStatus},
-      </if>
-      <if test="createTime != null">
-        #{createTime},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime},
-      </if>
+      <if test="advertId != null">#{advertId},</if>
+      <if test="advertName != null">#{advertName},</if>
+      <if test="advertUrl != null">#{advertUrl},</if>
+      <if test="advertShowType != null">#{advertShowType},</if>
+      <if test="advertStatus != null">#{advertStatus},</if>
+      <if test="createTime != null">#{createTime},</if>
+      <if test="updateTime != null">#{updateTime},</if>
+      <if test="advertImgUrl != null">#{advertImgUrl},</if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.xiaoma.bean.bo.SysAdvertInfoExample" resultType="java.lang.Integer">
@@ -161,27 +136,14 @@
   <update id="updateByExampleSelective" parameterType="map">
     update sys_advert_info
     <set>
-      <if test="record.advertId != null">
-        advert_id = #{record.advertId},
-      </if>
-      <if test="record.advertName != null">
-        advert_name = #{record.advertName},
-      </if>
-      <if test="record.advertUrl != null">
-        advert_url = #{record.advertUrl},
-      </if>
-      <if test="record.advertShowType != null">
-        advert_show_type = #{record.advertShowType},
-      </if>
-      <if test="record.advertStatus != null">
-        advert_status = #{record.advertStatus},
-      </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime},
-      </if>
-      <if test="record.updateTime != null">
-        update_time = #{record.updateTime},
-      </if>
+      <if test="record.advertId != null">advert_id = #{record.advertId},</if>
+      <if test="record.advertName != null">advert_name = #{record.advertName},</if>
+      <if test="record.advertUrl != null">advert_url = #{record.advertUrl},</if>
+      <if test="record.advertShowType != null">advert_show_type = #{record.advertShowType},</if>
+      <if test="record.advertStatus != null">advert_status = #{record.advertStatus},</if>
+      <if test="record.createTime != null">create_time = #{record.createTime},</if>
+      <if test="record.updateTime != null">update_time = #{record.updateTime},</if>
+      <if test="record.advertImgUrl != null">advert_img_url = #{record.advertImgUrl},</if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -195,6 +157,7 @@
       advert_show_type = #{record.advertShowType},
       advert_status = #{record.advertStatus},
       create_time = #{record.createTime},
+      advert_img_url = #{record.advertImgUrl},
       update_time = #{record.updateTime}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -221,6 +184,9 @@
       <if test="updateTime != null">
         update_time = #{updateTime},
       </if>
+      <if test="advertImgUrl != null">
+        advert_img_url = #{advertImgUrl},
+      </if>
     </set>
     where advert_id = #{advertId}
   </update>
@@ -231,7 +197,8 @@
       advert_show_type = #{advertShowType},
       advert_status = #{advertStatus},
       create_time = #{createTime},
-      update_time = #{updateTime}
+      update_time = #{updateTime},
+      advert_img_url = #{advertImgUrl}
     where advert_id = #{advertId}
   </update>
 </mapper>

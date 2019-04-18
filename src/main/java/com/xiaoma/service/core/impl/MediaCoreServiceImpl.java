@@ -119,7 +119,7 @@ public class MediaCoreServiceImpl implements MediaCoreService {
                 for (SysMediaInfo sysMediaInfo : mediaInfoList){
                     MediaInfoVO mediaInfoVO = new MediaInfoVO();
                     BeanUtils.copyProperties(sysMediaInfo,mediaInfoVO);
-                    mediaInfoVO.setMediaTypeName(mediaTypeMap.get(sysMediaInfo.getMediaTypeId()));
+                    mediaInfoVO.setMediaTypeName(mediaTypeMap.get(String.valueOf(sysMediaInfo.getMediaTypeId())));
                     mediaInfoVO.setShowTypeName(showTypeMap.get(sysMediaInfo.getAdvertShowType()));
                     mediaInfoVOList.add(mediaInfoVO);
                 }
@@ -187,6 +187,7 @@ public class MediaCoreServiceImpl implements MediaCoreService {
                 sysMediaAdvertPut.setMediaPlanId(planCode);
                 sysMediaAdvertPut.setAdvertUrl(sysAdvertInfo.getAdvertUrl());
                 sysMediaAdvertPut.setAdvertShowType(sysAdvertInfo.getAdvertShowType());
+                sysMediaAdvertPut.setAdvertImgUrl(sysAdvertInfo.getAdvertImgUrl());
                 mediaAdvertPutList.add(sysMediaAdvertPut);
             });
             mediaAdvertPutService.batchSaveMediaAdvertPut(mediaAdvertPutList);
@@ -380,10 +381,13 @@ public class MediaCoreServiceImpl implements MediaCoreService {
                  */
                 if (mediaAdvertPutList != null && !mediaAdvertPutList.isEmpty()){
                     List<MediaAdvertVO> mediaAdvertVOS = new ArrayList<>(mediaAdvertPutList.size());
-                    for (SysMediaAdvertPut mediaAdvertPut : mediaAdvertPutList){
+                    for (SysMediaAdvertPut sysMediaAdvertPut : mediaAdvertPutList){
                         MediaAdvertVO mediaAdvertVO = new MediaAdvertVO();
-                        BeanUtils.copyProperties(mediaAdvertPut,mediaAdvertVO);
-                        mediaAdvertVO.setPlanId(mediaAdvertPut.getMediaPlanId());
+                        mediaAdvertVO.setPlanId(sysMediaAdvertPut.getMediaPlanId());
+                        mediaAdvertVO.setAdvertId(sysMediaAdvertPut.getAdvertId());
+                        mediaAdvertVO.setAdvertUrl(sysMediaAdvertPut.getAdvertUrl());
+                        mediaAdvertVO.setAdvertImgUrl(sysMediaAdvertPut.getAdvertImgUrl());
+                        mediaAdvertVO.setAdvertShowType(sysMediaAdvertPut.getAdvertShowType());
                         mediaAdvertVOS.add(mediaAdvertVO);
                     }
                 retInfo.setResultCodes(ResultCodes.SUCCESS);

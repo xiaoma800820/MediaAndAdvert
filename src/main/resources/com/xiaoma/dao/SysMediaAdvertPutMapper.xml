@@ -13,6 +13,7 @@
     <result column="advert_url" jdbcType="VARCHAR" property="advertUrl" />
     <result column="advert_show_type" jdbcType="VARCHAR" property="advertShowType" />
     <result column="key_id" jdbcType="VARCHAR" property="keyId" />
+    <result column="advert_img_url" jdbcType="VARCHAR" property="advertImgUrl" />
 
   </resultMap>
 
@@ -20,13 +21,13 @@
   <insert id="insertByMediaAdvertPutList" parameterType="java.util.List">
     INSERT INTO sys_media_advert_put (
     media_advert_id, advert_id, advert_name, weight_factor, status, create_time, update_time, media_plan_id,
-    advert_url, advert_show_type, key_id
+    advert_url, advert_show_type, key_id,advert_img_url
     )
     VALUES
     <foreach collection="list" item="item" index="index" separator="," >
       (#{item.mediaAdvertId},#{item.advertId},#{item.advertName},
       #{item.weightFactor},#{item.status},#{item.createTime},#{item.updateTime},#{item.mediaPlanId},
-      #{item.advertUrl}, #{item.advertShowType}, #{item.keyId}
+      #{item.advertUrl}, #{item.advertShowType}, #{item.keyId},#{item.advertImgUrl}
       )
     </foreach>
   </insert>
@@ -100,7 +101,7 @@
   </sql>
   <sql id="Base_Column_List">
     media_advert_id, advert_id, advert_name, weight_factor, status, create_time, update_time, media_plan_id,
-    advert_url, advert_show_type, key_id
+    advert_url, advert_show_type, key_id, advert_img_url
   </sql>
   <select id="selectByExample" parameterType="com.xiaoma.bean.bo.SysMediaAdvertPutExample" resultMap="BaseResultMap">
     select
@@ -126,35 +127,21 @@
   <insert id="insert" parameterType="com.xiaoma.bean.po.SysMediaAdvertPut">
     insert into sys_media_advert_put (media_advert_id, advert_id, advert_name, weight_factor,
       status, create_time, update_time, 
-      media_plan_id)
+      media_plan_id,advert_img_url)
     values (#{mediaAdvertId}, #{advertId}, #{advertName}, #{weightFactor},
       #{status}, #{createTime}, #{updateTime}, 
-      #{mediaPlanId})
+      #{mediaPlanId},#{advertImgUrl})
   </insert>
   <insert id="insertSelective" parameterType="com.xiaoma.bean.po.SysMediaAdvertPut">
     insert into sys_media_advert_put
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="mediaAdvertId != null">
-        media_advert_id,
-      </if>
-      <if test="advertId != null">
-        advert_id,
-      </if>
-      <if test="weightFactor != null">
-        weight_factor,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="mediaPlanId != null">
-        media_plan_id,
-      </if>
+      <if test="mediaAdvertId != null">media_advert_id,</if>
+      <if test="advertId != null">advert_id,</if>
+      <if test="weightFactor != null">weight_factor,</if>
+      <if test="status != null">status,</if>
+      <if test="createTime != null">create_time,</if>
+      <if test="updateTime != null">update_time,</if>
+      <if test="mediaPlanId != null">media_plan_id,</if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="mediaAdvertId != null">

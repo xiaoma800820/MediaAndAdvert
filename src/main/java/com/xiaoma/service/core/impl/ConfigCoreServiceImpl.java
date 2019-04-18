@@ -150,7 +150,8 @@ public class ConfigCoreServiceImpl implements ConfigCoreService {
             List<MediaTypeVO> mediaTypeVOS = new ArrayList<>(sysMediaTypes.size());
             sysMediaTypes.forEach(sysMediaType -> {
                 MediaTypeVO mediaTypeVO = new MediaTypeVO();
-                BeanUtils.copyProperties(sysMediaType,mediaTypeVO);
+                mediaTypeVO.setMediaTypeId(sysMediaType.getMediaTypeId());
+                mediaTypeVO.setMediaTypeName(sysMediaType.getMediaTypeName());
                 mediaTypeVOS.add(mediaTypeVO);
             });
             retInfo.setResultCodes(ResultCodes.SUCCESS);
